@@ -11,9 +11,11 @@
 #define MAX_ARGS 64
 #define MAX_COMMANDS 10 // Define a maximum number of commands
 #define MAX_HISTORY 5
+
 int main() {
     char *history[MAX_HISTORY];
     char input[MAX_LENGTH];
+    char temp[MAX_LENGTH];
     char *args[MAX_COMMANDS]; // Array to store individual commands
     int start = 0;
     int end = 0;
@@ -63,10 +65,12 @@ int main() {
         }
 
         // Tokenize string into commands based on pipes for idividual commands to be executed
+        strcpy(temp, input);//stores origninal command for later use in history if successfully executed
         int argCount = 0;
         token = strtok(input, "|");
         while (token != NULL && argCount < MAX_COMMANDS) {
             args[argCount++] = token;
+            
             token = strtok(NULL, "|");
         }
 
@@ -192,7 +196,7 @@ int main() {
         history_count--; // Decrease count temporarily
         }
 
-        history[history_count] = strdup(input);
+        history[history_count] = strdup(temp);
 
     // Update the count of history, ensuring it does not exceed MAX_HISTORY
     if (history_count < MAX_HISTORY) {
